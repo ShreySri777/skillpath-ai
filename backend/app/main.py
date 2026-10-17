@@ -3,6 +3,7 @@ from collections import defaultdict, deque
 from typing import Literal
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from app.database import get_neo4j_driver
@@ -13,7 +14,16 @@ app = FastAPI(
     description="Graph-powered career navigation and skill-gap analysis.",
     version="0.1.0",
 )
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],
+)
 
 class AnalyzeRequest(BaseModel):
     target_role: str = Field(min_length=1, max_length=100)

@@ -150,7 +150,7 @@ function App() {
     setAnalysisError('')
 
     try {
-      const result = await fetchCareerAnalysis(targetRole, skills)
+      const result = await fetchCareerAnalysis(targetRole, skills, false)
       setAnalysisResult(result)
       setAnalyzed(true)
     } catch (error) {
